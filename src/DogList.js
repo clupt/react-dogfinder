@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import DogDetails from "./DogDetails";
+import { Link } from "react-router-dom";
 
 // import { v4 as uuid } from "uuid";
 
@@ -22,22 +23,22 @@ function DogList() {
       dogsInfo[i].key = i;
     }
     console.log("dogsInfo=", dogsInfo);
-    setAllDogs(dogsInfo);
     setIsLoading(false);
+    setAllDogs(dogsInfo);
   }
-
-  getDogs();
+  if (isLoading) {
+    getDogs();
+  }
 
   return (
     <div className="DogList">
       {!isLoading
         ? <div>{allDogs.map((d) => (
-          <div>
-            <DogDetails
-              name={d.name}
-              age={d.age}
-              facts={d.facts}
-            />
+          <div key={d.key}>
+            <Link to={`/dogs/${d.name}`}>
+              <img src={`/${d.src}.jpg`} width={200} />
+              <h4>{d.name}</h4>
+            </Link>
           </div>
         ))
         }
