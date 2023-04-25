@@ -28,12 +28,12 @@ function DogList() {
   }
   if (isLoading) {
     getDogs();
+    return <div>Still getting dogs</div>
   }
 
   return (
     <div className="DogList">
-      {!isLoading
-        ? <div>{allDogs.map((d) => (
+        <div>{allDogs.map((d) => (
           <div key={d.key}>
             <Link to={`/dogs/${d.name}`}>
               <img src={`/${d.src}.jpg`} width={200} alt={d.name}/>
@@ -43,8 +43,6 @@ function DogList() {
         ))
         }
         </div>
-        : <div>"Still getting dogs"</div>
-      }
     </div>
   );
 }

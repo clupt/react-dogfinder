@@ -28,6 +28,7 @@ function App() {
 
   /** gets dog names and sets state for dogNames and isLoading */
   async function getDogNames() {
+    //TODO: save all dog data here and send it down as props to doglist & details
     const response = await axios.get("http://localhost:5001/dogs");
     const dogsInfo = response.data;
     const names = dogsInfo.map(d => d.name);
