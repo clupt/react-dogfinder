@@ -1,13 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
-import DogDetails from "./DogDetails";
 import { Link } from "react-router-dom";
-
-// import { v4 as uuid } from "uuid";
 
 /** DogList
  *
- * state: the list of dogs [{"name": "Whiskey", "age": 5, "src": "whisk ...}]
+ * State:
+ *      allDogs: the list of dogs [{"name": "Whiskey", "age": 5, "src": "whisk ...}]
+ *      isLoading: keeps track of if the async fn is done
  */
 
 function DogList() {
@@ -16,6 +15,7 @@ function DogList() {
   console.log("doglist=", allDogs);
   const [isLoading, setIsLoading] = useState(true);
 
+  /** gets all dogs and sets allDogs and isLoading state */
   async function getDogs() {
     const response = await axios.get("http://localhost:5001/dogs");
     const dogsInfo = response.data;
@@ -36,7 +36,7 @@ function DogList() {
         ? <div>{allDogs.map((d) => (
           <div key={d.key}>
             <Link to={`/dogs/${d.name}`}>
-              <img src={`/${d.src}.jpg`} width={200} />
+              <img src={`/${d.src}.jpg`} width={200} alt={d.name}/>
               <h4>{d.name}</h4>
             </Link>
           </div>

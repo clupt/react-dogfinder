@@ -5,30 +5,33 @@ import { useState } from "react";
 
 /** DogDetails
  *
- *  props: name of dog
- */
+ *  State: dog, isLoading
+ *
+ *  App --> DogDetails
+*/
 function DogDetails () {
-  console.log("dog details")
+  const [dog, setDog] = useState(null);
+  console.log("dog details=", dog);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log("isLoading=", isLoading);
+  const params = useParams();
 
-  const [dog, setDog] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const params = useParams()
-
-
+  /** gets a single dog and updates state for dog and isLoading */
   async function getDog() {
     const resp = await axios.get("http://localhost:5001/dogs")
     console.log(resp.data);
     const dog = resp.data.filter(d => d.name === params.name)[0];
-    setDog(dog)
-    setIsLoading(false)
+    setDog(dog);
+    setIsLoading(false);
   }
-  if (isLoading) {
-    getDog()
+
+  if (isLoading || dog.name !== params.name) {
+    getDog();
   }
 
   return (
     <div className="DogDetails">
-      {isLoading 
+      {isLoading
       ? <p>Loading!</p>
       : <div>
         <h1>{dog.name}</h1>
